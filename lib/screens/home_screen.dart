@@ -5,6 +5,7 @@ import 'custom_notifications.dart';
 import 'calculator_page.dart';
 import 'settings_page.dart';
 import 'theme_controller.dart';
+import 'widget/widget_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,11 +24,12 @@ class _HomeScreenState extends State<HomeScreen> {
       const CountdownTimer(),
       const CustomNotifications(),
       const CalculatorPage(),
+      const WidgetPage(),
       SettingsPage(
-        selectedColor: themeController.currentColor, // ✅ PAS de `.value`
+        selectedColor: themeController.currentColor,
         onColorSelected: (color) {
-          themeController.setColor(color);           // ✅ Utiliser .setColor()
-          setState(() {}); // Pour rafraîchir les éléments dynamiques
+          themeController.setColor(color);
+          setState(() {}); // Rafraîchir l'UI si thème change
         },
       ),
     ];
@@ -42,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final color = themeController.currentColor;
-    final screens = getScreens(); // À chaque build, récupérer le bon thème
+    final screens = getScreens();
 
     return Scaffold(
       body: screens[_selectedIndex],
@@ -68,6 +70,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.calculate),
             label: 'Calculatrice',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.edit),
+            label: 'Widgets',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),

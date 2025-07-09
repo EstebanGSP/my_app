@@ -5,7 +5,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'timer_service.dart';
-import 'theme_controller.dart'; // 👈 Import unique ici
+import 'theme_controller.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -19,7 +19,7 @@ class CountdownTimer extends StatefulWidget {
 
 class _CountdownTimerState extends State<CountdownTimer> {
   final TimerService timerService = TimerService();
-  final ThemeController themeController = ThemeController(); // 👈
+  final ThemeController themeController = ThemeController();
   Timer? _refreshTimer;
 
   @override
@@ -50,9 +50,8 @@ class _CountdownTimerState extends State<CountdownTimer> {
           priority: Priority.high,
         ),
       ),
-      androidAllowWhileIdle: true,
-      uiLocalNotificationDateInterpretation:
-          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: null,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
     );
   }
 
@@ -229,7 +228,7 @@ class TimerDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeController = ThemeController(); // 👈 accès au thème ici
+    final themeController = ThemeController();
     final color = themeController.currentColor;
 
     final now = DateTime.now();

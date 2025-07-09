@@ -8,9 +8,10 @@ class ThemeController {
 
   final ValueNotifier<MaterialColor> themeColor = ValueNotifier(Colors.deepPurple);
 
+  /// Accès direct à la couleur actuelle
   MaterialColor get currentColor => themeColor.value;
 
-  /// Méthode à appeler au démarrage pour charger le thème sauvegardé
+  /// Charge la couleur enregistrée au lancement
   Future<void> loadTheme() async {
     final prefs = await SharedPreferences.getInstance();
     final int? colorValue = prefs.getInt('selectedThemeColor');
@@ -19,14 +20,14 @@ class ThemeController {
     }
   }
 
-  /// Applique une nouvelle couleur de thème et la sauvegarde
-  void setColor(MaterialColor color) async {
+  /// Définit et sauvegarde la nouvelle couleur
+  Future<void> setColor(MaterialColor color) async {
     themeColor.value = color;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setInt('selectedThemeColor', color.value);
   }
 
-  /// Convertit un int stocké (value) vers un MaterialColor valide
+  /// Convertit un int vers un MaterialColor
   MaterialColor _getMaterialColorFromValue(int value) {
     return <MaterialColor>[
       Colors.deepPurple,
